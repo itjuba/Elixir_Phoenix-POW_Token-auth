@@ -29,14 +29,13 @@ defmodule PhxyWeb.Router do
 
     resources "/registration", RegistrationController, singleton: true, only: [:create]
     resources "/session", SessionController, singleton: true, only: [:create, :delete]
-    resources "/users", UserController, only: [:index]
 
     post "/session/renew", SessionController, :renew
     get "/", PageController, :index
 	
     end
   scope "/api", PhxyWeb do
-    pipe_through :api_protected
+    pipe_through [:api, :api_protected]
     resources "/users", UserController, only: [:index]
 
     get "/", PageController, :index
